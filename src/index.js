@@ -1,8 +1,8 @@
-require('dotenv').config();
- const TOKEN = process.env.TOKEN;
+require("dotenv").config();
+const TOKEN = process.env.TOKEN;
 // console.log(`Token: ${TOKEN}`);
 
-const { Client, IntentsBitField } = require('discord.js');
+const { Client, IntentsBitField, EmbedBuilder } = require("discord.js");
 
 const client = new Client({
   intents: [
@@ -13,27 +13,52 @@ const client = new Client({
   ],
 });
 
-client.on('ready', (c) => {
+client.on("ready", (c) => {
   console.log(`${c.user.tag} is ready spaghetti.`);
 });
 
-client.on('messageCreate', (message) => {
+client.on("messageCreate", (message) => {
   if (message.author.bot) return;
 
-  if (message.content === ':frickujed:') {
-    message.reply('https://tenor.com/bWONj.gif');
+  if (message.content === ":frickujed:") {
+    message.reply("https://tenor.com/bWONj.gif");
   }
 });
 
-client.on('interactionCreate', (interaction) => { 
-  if (!interaction.isChatInputCommand())  return;
-    
-  if (interaction.commandName === 'add') { 
-    const num1 = interaction.options.get('first-number').value;
-    const num2 = interaction.options.get('second-number').value;
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
 
-    interaction.reply(`The sum is ${num1 + num2}`);
+  if (interaction.commandName === "embed") {
+    const embed = new EmbedBuilder()
+      .setTitle("Greedy companies leave you with:")
+      .setColor("Random")
+      .addFields(
+        { name: "Paypal F&F", value: "Payout: ", inline: true },
+        { name: "Paypal G&S", value: "Payout: ", inline: true },
+        {
+          name: "Ebay",
+          value: "Payout: ",
+          inline: true,
+        }
+      );
   }
-})
+});
+client.on("messageCreate", (message) => {
+  if (message.content === "embed") {
+    const embed = new EmbedBuilder()
+      .setTitle("Greedy companies leave you with:")
+      .setColor("Random")
+      .addFields(
+        { name: "Paypal F&F", value: "Payout: ", inline: true },
+        { name: "Paypal G&S", value: "Payout: ", inline: true },
+        {
+          name: "Ebay",
+          value: "Payout: ",
+          inline: true,
+        }
+      );
+    message.channel.send({ embeds: [embed] });
+  }
+});
 
 client.login(process.env.TOKEN);
