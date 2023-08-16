@@ -21,10 +21,6 @@ const commands = [
                         name: 'two',
                         value: 2,
                     },
-                    { 
-                        name: 'three',
-                        value: 3,
-                    }
                 ],
                 required: true,
             },
